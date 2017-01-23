@@ -42,6 +42,7 @@ import mGear_mocapTools
 import mgear
 import mgear.maya.synoptic as syn
 import mgear.maya.skin as skin
+import mgear.dev.motionPath
 
 
 def CreateMenu():
@@ -158,4 +159,12 @@ def CreateMenu():
     pm.menuItem(label="Compile PyQt ui", command=partial(mGear_utils.ui2py, None))
     pm.menuItem( divider=True )
     pm.menuItem(label="Create mGear Hotkeys", command=partial(mGear_utils.createHotkeys, None))
+
+    ## dev Tools
+    pm.setParent(mGearM, menu=True)
+    pm.menuItem(divider=True)
+    devM = pm.menuItem(parent='mGear', subMenu=True, tearOff=True, label='Dev')
+    pm.menuItem(label="motionPath", command=partial(mgear.dev.motionPath.start))
+
+
 
