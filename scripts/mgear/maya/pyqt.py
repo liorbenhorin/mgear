@@ -115,7 +115,8 @@ def showDialog(dialog, *args):
 
     # Create minimal dialog object
     windw = dialog(maya_main_window())
-    windw.move(QtWidgets.QApplication.desktop().screen().rect().center()- windw.rect().center())
+    center_to_maya_window(windw)
+    # windw.move(QtWidgets.QApplication.desktop().screen().rect().center()- windw.rect().center())
 
     # Delete the UI if errors occur to avoid causing winEvent
     # and event errors (in Maya 2014)
@@ -127,6 +128,14 @@ def showDialog(dialog, *args):
         windw.deleteLater()
         traceback.print_exc()
 
+
+def center_to_maya_window(window):
+
+    frameGm = window.frameGeometry()
+    screen = QtWidgets.QApplication.desktop().screenNumber(QtWidgets.QApplication.desktop().cursor().pos())
+    centerPoint = QtWidgets.QApplication.desktop().screenGeometry(screen).center()
+    frameGm.moveCenter(centerPoint)
+    window.move(frameGm.topLeft())
 
 def deleteInstances(dialog, checkinstance):
     """
